@@ -2,6 +2,10 @@
 
 > Minimal blog Nuxt JS + Wordpress API
 
+Demo:  [https://nuxtjs-minimal-blog.ntc.now.sh/blog](https://nuxtjs-minimal-blog.ntc.now.sh/blog).
+
+Detail: [Minimal blog Nuxt JS + WP API](https://ntcde.com/web-development/tao-blog-don-gian-voi-nuxt-js-va-wordpress-api.html)
+
 ## Build Setup
 
 ``` bash
