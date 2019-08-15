@@ -19,7 +19,13 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || ''
+        content:
+          'Tập trung cung cấp các nội dung liên quan đến công nghệ mới, các tools, tuts hỗ trợ cho lập trình viên nói riêng và người yêu công nghệ nói chung.'
+      },
+      {
+        hid: 'keywords',
+        name: 'keywords',
+        content: 'vuejs, nuxt, javascript, tutorials, development, software'
       }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]

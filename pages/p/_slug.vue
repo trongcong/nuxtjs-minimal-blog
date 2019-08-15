@@ -14,19 +14,20 @@ export default {
     }
   },
   head() {
+    const post = this.post
     return this.isValidPost()
       ? {
-          title: this.post.title.rendered,
+          title: post.title.rendered,
           meta: [
             {
               hid: 'description',
               name: 'description',
-              content: this.post.excerpt.rendered.replace(/<\/?[^>]+(>|$)/g, '')
+              content: post.excerpt.rendered.replace(/<\/?[^>]+(>|$)/g, '')
             },
             {
               hid: 'og:title',
               property: 'og:title',
-              content: this.post.title.rendered
+              content: post.title.rendered
             },
             {
               hid: 'og:site_name',
@@ -41,7 +42,7 @@ export default {
             {
               hid: 'og:description',
               property: 'og:description',
-              content: this.post.excerpt.rendered.replace(/<\/?[^>]+(>|$)/g, '')
+              content: post.excerpt.rendered.replace(/<\/?[^>]+(>|$)/g, '')
             },
             {
               hid: 'og:type',
@@ -51,7 +52,7 @@ export default {
             {
               hid: 'og:image',
               property: 'og:image',
-              content: this.post._embedded['wp:featuredmedia'][0].source_url
+              content: post._embedded['wp:featuredmedia'][0].source_url
             }
           ]
         }
