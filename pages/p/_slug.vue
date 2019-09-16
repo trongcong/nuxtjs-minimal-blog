@@ -2,15 +2,28 @@
   <div v-if="isValidPost()">
     <h1 class="title" v-html="post.title.rendered"></h1>
     <div class="news-content" v-html="post.content.rendered"></div>
+
+    <ul class="list-news">
+      <ListPostItem
+        v-for="p in random_posts"
+        :key="p.id"
+        :post="p"
+        :random_posts="random_posts"
+      />
+    </ul>
   </div>
 </template>
 
 <script>
+import ListPostItem from '~/components/ListPostItem'
+
 export default {
   name: 'P',
+  components: { ListPostItem },
   data() {
     return {
-      post: {}
+      post: {},
+      random_posts: []
     }
   },
   head() {
@@ -58,27 +71,48 @@ export default {
         }
       : {}
   },
-  asyncData({ $axios, params, error }) {
+  async asyncData({ $axios, params, error }) {
     console.log('asyncData post single', params)
 
     if (!params.post) {
       const slug = params.slug
-      return $axios
-        .get(`https://techtalk.vn/wp-json/wp/v2/posts?_embed&slug=${slug}`)
-        .then((res) => {
-          if (!res.data.length)
-            error({ statusCode: 404, message: 'Post not found!' })
-          return {
-            post: res.data.length ? res.data[0] : []
-          }
-        })
-        .catch(function(ex) {
-          console.log('parsing failed', ex)
-          error({ statusCode: 404, message: ex })
-        })
+      try {
+        const res = await $axios.get(
+          `//techtalk.vn/wp-json/wp/v2/posts?_embed&slug=${slug}`
+        )
+        const resRd = await $axios.get(
+          `//techtalk.vn/wp-json/wp/v2/posts?_embed&categories=${
+            res.data[0].categories[0]
+          }`
+        )
+
+        if (!res.data.length)
+          error({ statusCode: 404, message: 'Post not found!' })
+        return {
+          post: res.data.length ? res.data[0] : [],
+          random_posts: resRd.data.length ? resRd.data : []
+        }
+      } catch (ex) {
+        console.log('parsing failed', ex)
+        error({ statusCode: 404, message: ex })
+      }
+      // return $axios
+      //   .get(`//techtalk.vn/wp-json/wp/v2/posts?_embed&slug=${slug}`)
+      //   .then((res) => {
+      //     if (!res.data.length)
+      //       error({ statusCode: 404, message: 'Post not found!' })
+      //     return {
+      //       post: res.data.length ? res.data[0] : []
+      //     }
+      //   })
+      //   .catch(function(ex) {
+      //     console.log('parsing failed', ex)
+      //     error({ statusCode: 404, message: ex })
+      //   })
     } else {
       return {
-        post: params.post
+        post: params.post,
+        random_posts: params.random_posts
       }
     }
   },

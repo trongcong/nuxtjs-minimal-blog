@@ -1,0 +1,9 @@
+{
+	"apps": [
+		{
+			"name": "techtalk",
+			"script": "npm",
+			"args": "start"
+		}
+	]
+}

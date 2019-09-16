@@ -2,7 +2,12 @@
   <div>
     <div class="list-news-wrap">
       <ul class="list-news">
-        <ListPostItem v-for="post in posts" :key="post.id" :post="post" />
+        <ListPostItem
+          v-for="post in posts"
+          :key="post.id"
+          :post="post"
+          :random_posts="random_posts"
+        />
       </ul>
       <Pagination :current-page="currentPage" :total-pages="totalPages" />
     </div>
@@ -12,6 +17,8 @@
 <script>
 import ListPostItem from '~/components/ListPostItem'
 import Pagination from '~/components/Pagination.vue'
+import { getRandomArrayElement } from '~/common/utils'
+
 export default {
   name: 'Blog',
   components: { ListPostItem, Pagination },
@@ -20,6 +27,7 @@ export default {
   data() {
     return {
       posts: [],
+      random_posts: [],
       currentPage: 1,
       totalPosts: 0,
       totalPages: 0,
@@ -29,15 +37,14 @@ export default {
   asyncData({ $axios, query, error }) {
     const page = +query.page || 1
     return $axios
-      .get(
-        `https://techtalk.vn/wp-json/wp/v2/posts?_embed&page=${page}&per_page=20`
-      )
+      .get(`//techtalk.vn/wp-json/wp/v2/posts?_embed&page=${page}&per_page=20`)
       .then((res) => {
         return {
           posts: res.data,
           totalPosts: +res.headers['x-wp-total'],
           totalPages: +res.headers['x-wp-totalpages'],
           currentPage: +page,
+          random_posts: getRandomArrayElement(res.data, 10),
           title:
             'Result page ' +
             +page +
@@ -73,7 +80,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .list-news {
   list-style-type: none;
   padding: 0;

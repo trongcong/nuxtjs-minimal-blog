@@ -5,7 +5,7 @@
       class="__title"
       :to="{
         name: 'p-slug',
-        params: { post: post, slug: post.slug }
+        params: { post: post, slug: post.slug, random_posts: random_posts }
       }"
       v-html="post.title.rendered"
     ></NuxtLink>
@@ -36,6 +36,10 @@ export default {
     post: {
       type: Object,
       default: () => {}
+    },
+    randomPosts: {
+      type: Array,
+      default: () => []
     }
   },
   computed: {
