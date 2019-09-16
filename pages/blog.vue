@@ -37,7 +37,9 @@ export default {
   asyncData({ $axios, query, error }) {
     const page = +query.page || 1
     return $axios
-      .get(`//techtalk.vn/wp-json/wp/v2/posts?_embed&page=${page}&per_page=20`)
+      .get(
+        `https://techtalk.vn/wp-json/wp/v2/posts?_embed&page=${page}&per_page=20`
+      )
       .then((res) => {
         return {
           posts: res.data,

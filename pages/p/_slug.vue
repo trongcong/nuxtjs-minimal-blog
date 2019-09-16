@@ -78,10 +78,10 @@ export default {
       const slug = params.slug
       try {
         const res = await $axios.get(
-          `//techtalk.vn/wp-json/wp/v2/posts?_embed&slug=${slug}`
+          `https://techtalk.vn/wp-json/wp/v2/posts?_embed&slug=${slug}`
         )
         const resRd = await $axios.get(
-          `//techtalk.vn/wp-json/wp/v2/posts?_embed&categories=${
+          `https://techtalk.vn/wp-json/wp/v2/posts?_embed&categories=${
             res.data[0].categories[0]
           }`
         )
@@ -97,7 +97,7 @@ export default {
         error({ statusCode: 404, message: ex })
       }
       // return $axios
-      //   .get(`//techtalk.vn/wp-json/wp/v2/posts?_embed&slug=${slug}`)
+      //   .get(`https://techtalk.vn/wp-json/wp/v2/posts?_embed&slug=${slug}`)
       //   .then((res) => {
       //     if (!res.data.length)
       //       error({ statusCode: 404, message: 'Post not found!' })
