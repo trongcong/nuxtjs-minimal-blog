@@ -5,7 +5,7 @@
       class="__title"
       :to="{
         name: 'p-slug',
-        params: { post: post, slug: post.slug, random_posts: random_posts }
+        params: { post: post, slug: post.slug, random_posts: randomPosts }
       }"
       v-html="post.title.rendered"
     ></NuxtLink>

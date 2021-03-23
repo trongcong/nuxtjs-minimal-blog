@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { BASE_API_LINK } from '../../common/utils'
 import ListPostItem from '~/components/ListPostItem'
 
 export default {
@@ -75,13 +76,14 @@ export default {
     console.log('asyncData post single', params)
 
     if (!params.post) {
-      const slug = params.slug
+      const { slug } = params
       try {
         const res = await $axios.get(
-          `https://techtalk.vn/wp-json/wp/v2/posts?_embed&slug=${slug}`
+          `${BASE_API_LINK}/wp-json/wp/v2/posts?_embed&slug=${slug}`
         )
+
         const resRd = await $axios.get(
-          `https://techtalk.vn/wp-json/wp/v2/posts?_embed&categories=${
+          `${BASE_API_LINK}/wp-json/wp/v2/posts?_embed&categories=${
             res.data[0].categories[0]
           }`
         )
@@ -96,19 +98,6 @@ export default {
         console.log('parsing failed', ex)
         error({ statusCode: 404, message: ex })
       }
-      // return $axios
-      //   .get(`https://techtalk.vn/wp-json/wp/v2/posts?_embed&slug=${slug}`)
-      //   .then((res) => {
-      //     if (!res.data.length)
-      //       error({ statusCode: 404, message: 'Post not found!' })
-      //     return {
-      //       post: res.data.length ? res.data[0] : []
-      //     }
-      //   })
-      //   .catch(function(ex) {
-      //     console.log('parsing failed', ex)
-      //     error({ statusCode: 404, message: ex })
-      //   })
     } else {
       return {
         post: params.post,
@@ -116,13 +105,7 @@ export default {
       }
     }
   },
-  mounted() {
-    this.$nextTick(() => {
-      this.$nuxt.$loading.start()
-
-      setTimeout(() => this.$nuxt.$loading.finish(), 500)
-    })
-  },
+  mounted() {},
   methods: {
     isValidPost() {
       return (

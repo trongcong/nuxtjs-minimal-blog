@@ -6,7 +6,7 @@
           v-for="post in posts"
           :key="post.id"
           :post="post"
-          :random_posts="random_posts"
+          :random-posts="random_posts"
         />
       </ul>
       <Pagination :current-page="currentPage" :total-pages="totalPages" />
@@ -17,7 +17,7 @@
 <script>
 import ListPostItem from '~/components/ListPostItem'
 import Pagination from '~/components/Pagination.vue'
-import { getRandomArrayElement } from '~/common/utils'
+import { getRandomArrayElement, BASE_API_LINK } from '~/common/utils'
 
 export default {
   name: 'Blog',
@@ -38,7 +38,7 @@ export default {
     const page = +query.page || 1
     return $axios
       .get(
-        `https://techtalk.vn/wp-json/wp/v2/posts?_embed&page=${page}&per_page=20`
+        `${BASE_API_LINK}/wp-json/wp/v2/posts?_embed&page=${page}&per_page=20`
       )
       .then((res) => {
         return {
